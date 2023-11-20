@@ -42,4 +42,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function restaurantApplications()
+    {
+        return $this->hasMany(RestaurantApplication::class, 'user_id');
+    }
+
+
+    public function restaurants()
+{
+    return $this->hasMany(Restaurant::class);
 }
+
+public function ratings()
+{
+    return $this->belongsToMany(Restaurant::class, 'ratings')->withPivot('rating', 'review');
+}
+
+}
+
