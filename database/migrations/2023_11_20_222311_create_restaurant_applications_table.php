@@ -16,8 +16,8 @@ return new class extends Migration
         $table->string('restaurant_name');
         $table->text('description');
         $table->foreignId('user_id')->constrained(); // Assuming you have a 'users' table
-        $table->decimal('latitude', 10, 8)->nullable();
-        $table->decimal('longitude', 11, 8)->nullable();
+        $table->text('logo');
+        $table->text('location');
         $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
         $table->timestamps();
     });

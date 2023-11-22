@@ -5,26 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-// app/Models/RestaurantApplication.php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
 class RestaurantApplication extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'restaurant_name',
-        'description',
-        'user_id',
-        'latitude',
-        'longitude',
-        'status',
+        'restaurant_name', 'description', 'logo','location', 'user_id', 'status',
     ];
 
-    // Define relationships if needed
-    public function owner()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
+    public function menuApplications()
+{
+    return $this->hasMany(MenuApplication::class);
+}
+
 }
