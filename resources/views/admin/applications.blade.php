@@ -16,8 +16,11 @@
                 <table class="min-w-full bg-white dark:bg-gray-800">
                     <thead>
                         <tr>
+                            <th class="py-2 px-4 border-b dark:border-gray-700">Logo</th>
+
                             <th class="py-2 px-4 border-b dark:border-gray-700">Restaurant Name</th>
                             <th class="py-2 px-4 border-b dark:border-gray-700">Description</th>
+
                             <th class="py-2 px-4 border-b dark:border-gray-700">Status</th>
                             <th class="py-2 px-4 border-b dark:border-gray-700">Action</th>
                         </tr>
@@ -26,8 +29,11 @@
                         @foreach($applications as $application)
                         <!-- Change $restaurantApplications to $applications -->
                         <tr>
+                            <td class="py-2 px-4 border-b dark:border-gray-700">{{ $application->logo}}</td>
+
                             <td class="py-2 px-4 border-b dark:border-gray-700">{{ $application->restaurant_name }}</td>
                             <td class="py-2 px-4 border-b dark:border-gray-700">{{ $application->description }}</td>
+
                             <td class="py-2 px-4 border-b dark:border-gray-700">{{ $application->status }}</td>
                             <td class="py-2 px-4 border-b dark:border-gray-700">
                                 <a href="{{ route('admin.application-details', ['id' => $application->id]) }}" class="text-blue-500 hover:underline">View Details</a>

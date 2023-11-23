@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RestaurantApplication;
-use App\Models\Restaurant;
 
 class AdminDashboardController extends Controller
 {
@@ -40,13 +39,13 @@ class AdminDashboardController extends Controller
     public function acceptRestaurant(Request $request)
     {
         $this->updateApplicationStatus($request->input('application_id'), 'approved');
-        return redirect()->route('admin.applications')->with('success', 'Restaurant application accepted successfully.');
+        return redirect()->route('admin.accepted-restaurants')->with('success', 'Restaurant application accepted successfully.');
     }
 
     public function denyRestaurant(Request $request)
     {
         $this->updateApplicationStatus($request->input('application_id'), 'rejected');
-        return redirect()->route('admin.applications')->with('success', 'Restaurant application denied successfully.');
+        return redirect()->route('admin.denied-restaurants')->with('success', 'Restaurant application denied successfully.');
     }
 
     private function updateApplicationStatus($applicationId, $status)
