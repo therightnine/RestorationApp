@@ -14,6 +14,8 @@ class CreateMenuApplicationsTable extends Migration
             $table->id();
             $table->foreignId('restaurant_id')->constrained();
             $table->text('description');
+            $table->timestamps();
+
         });
     }
 

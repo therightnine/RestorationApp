@@ -1,5 +1,3 @@
-<!-- resources/views/RestaurantApplications/createMenu.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,8 +43,11 @@
     <div class="container">
         <h2>Create Menu Application</h2>
 
-        <form action="{{ route('menu.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('menu.application.store') }}" method="post" enctype="multipart/form-data">
             @csrf
+
+            <!-- Hidden field for restaurant_id -->
+            <input type="hidden" name="restaurant_id" value="{{ $restaurantApplication->id }}">
 
             <!-- Hidden field for menu_id -->
             <input type="hidden" name="menu_id" value="{{ uniqid() }}">
@@ -70,12 +71,14 @@
                 </div>
                 <button type="button" class="btn btn-secondary mt-2" id="addDish">Add Dish</button>
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit Application</button>
+            
             <!-- Add a link/button to go back to the restaurant application -->
             <div class="text-center mt-3">
-                <a href="{{ route('applications.create') }}" class="btn btn-success">Back</a>
+                <a href="{{ route('restaurant.application.create') }}" class="btn btn-success">Back</a>
             </div>
+            @if(isset($restaurantApplication) && $restaurantApplication->id > 0)
+                <button type="submit" class="btn btn-primary">Submit </button>
+            @endif
 
         </form>
     </div>
@@ -97,7 +100,6 @@
             dishCounter++;
         });
     </script>
-
 
 </body>
 

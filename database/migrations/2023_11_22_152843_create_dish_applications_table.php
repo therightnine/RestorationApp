@@ -16,6 +16,8 @@ class CreateDishApplicationsTable extends Migration
             $table->string('photo')->nullable();
             $table->text('description');
             $table->decimal('price', 8, 2);
+            $table->timestamps();
+
         });
     }
 

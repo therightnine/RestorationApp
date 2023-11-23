@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,33 +16,41 @@
             background-color: #f8f9fa;
             padding: 20px;
         }
+
         .container {
             max-width: 600px;
             margin: auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 50px;
         }
+
         h2 {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .mb-3 {
             margin-bottom: 20px;
         }
     </style>
 </head>
-<body>
 
+<body>
     <div class="container">
         <h2>Create Restaurant Application</h2>
 
-        <form action="{{ route('applications.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('restaurant.application.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <!-- Add your form fields here -->
+            <div class="mb-3">
+                <label for="restaurant_name" class="form-label">Restaurant Id</label>
+                <input type="text" class="form-control" id="restaurant_id" name="restaurant_id" required>
+            </div>
+
             <div class="mb-3">
                 <label for="restaurant_name" class="form-label">Restaurant Name</label>
                 <input type="text" class="form-control" id="restaurant_name" name="restaurant_name" required>
@@ -63,28 +72,23 @@
             <!-- Hidden field to set the status to "pending" by default -->
             <input type="hidden" name="status" value="pending">
 
-<!-- Location Tapping Field -->
-<div class="mb-3">
+            <!-- Location Tapping Field -->
+            <div class="mb-3">
                 <label for="location" class="form-label">Location</label>
                 <div id="map" style="height: 300px;"></div>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="location" name="location" placeholder="Type location or click on the map" aria-describedby="location-btn">
-                    <button class="btn btn-primary" type="button" id="location-btn" onclick="getLocation()">Get My Location</button>
+                    <input type="text" class="form-control" id="location" name="location"
+                        placeholder="Type location or click on the map" aria-describedby="location-btn">
+                    <button class="btn btn-primary" type="button" id="location-btn" onclick="getLocation()">Get My
+                        Location</button>
                 </div>
             </div>
 
-            <!-- Add a link/button to go to the menu submission page -->
             <div class="text-center mt-3">
-                <a href="{{ route('applications.create') }}" class="btn btn-success">Back</a>
-                <!-- Check if $application exists and has an id before accessing its id -->
-                @if(isset($application) && $application->id)
-                    <a href="{{ route('menu.create', ['restaurant_id' => $application->id]) }}" class="btn btn-success">Next</a>
-                @endif
+                <a href="{{ route('menu.application.create', ['restaurant_id' => $restaurantApplication->restaurant_id]) }}" class="btn btn-success">Next</a>
             </div>
 
 
-
-            
         </form>
     </div>
 
@@ -135,4 +139,5 @@
     </script>
 
 </body>
+
 </html>
