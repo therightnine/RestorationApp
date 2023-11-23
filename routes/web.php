@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantApplicationController;
 use App\Http\Controllers\MenuApplicationController;
+use App\Http\Controllers\AdminDashboardController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/restaurantApplications/menu', [MenuApplicationController::class, 'store'])->name('menu.application.store');
 });
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/applications', [AdminDashboardController::class, 'viewApplications'])->name('admin.applications');
+    Route::get('/admin/accepted-restaurants', [AdminDashboardController::class, 'viewAcceptedRestaurants'])->name('admin.accepted-restaurants');
+    Route::get('/admin/denied-restaurants', [AdminDashboardController::class, 'viewDeniedRestaurants'])->name('admin.denied-restaurants');
+
+    Route::get('/admin/application/{id}', [AdminDashboardController::class, 'viewApplicationDetails'])->name('admin.application.details');
+
+    Route::post('/admin/accept-restaurant', [AdminDashboardController::class, 'acceptRestaurant'])->name('admin.accept-restaurant');
+    Route::post('/admin/deny-restaurant', [AdminDashboardController::class, 'denyRestaurant'])->name('admin.deny-restaurant');
+});
 
 
 require __DIR__.'/auth.php';
