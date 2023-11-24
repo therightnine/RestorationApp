@@ -84,10 +84,7 @@
                 </div>
             </div>
 
-            <div class="text-center mt-3">
-                <a href="{{ route('menu.application.create', ['restaurant_id' => $restaurantApplication->restaurant_id]) }}" class="btn btn-success">Next</a>
-            </div>
-
+           <button type="submit">next</button>
 
         </form>
     </div>

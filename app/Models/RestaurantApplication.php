@@ -10,7 +10,7 @@ class RestaurantApplication extends Model
     use HasFactory;
 
     protected $fillable = [
-        'restaurant_name', 'description', 'logo','location', 'user_id', 'status',
+        'restaurant_id','restaurant_name', 'description', 'logo','location', 'user_id', 'status',
     ];
 
     public function user()

@@ -28,7 +28,7 @@ class RestaurantApplicationController extends Controller
 {
     // Validate the incoming request data
     $validatedData = $request->validate([
-        'restaurant_id'=>['required|integer'],
+        'restaurant_id'=>['required'],
         'restaurant_name' => 'required|string|max:255',
         'description' => 'required|string',
         'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

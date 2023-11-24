@@ -19,5 +19,11 @@ class MenuApplication extends Model
         return $this->hasMany(DishApplication::class);
     }
 
+    public function restaurantApplication()
+    {
+        return $this->belongsTo(RestaurantApplication::class);
+    }
+
+
 
 }
