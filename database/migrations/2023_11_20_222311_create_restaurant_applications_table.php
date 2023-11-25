@@ -13,10 +13,10 @@ return new class extends Migration
 {
     Schema::create('restaurant_applications', function (Blueprint $table) {
         $table->id();
-        $table->integer('restaurant_id')->autoIncrement;
+        $table->integer('restaurant_id');
         $table->string('restaurant_name');
         $table->text('description');
-        $table->foreignId('user_id')->constrained(); // Assuming you have a 'users' table
+        $table->foreignId('user_id')->constrained('users'); // Assuming you have a 'users' table
         $table->text('logo');
         $table->text('location');
         $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');

@@ -12,7 +12,7 @@ class CreateMenuApplicationsTable extends Migration
     {
         Schema::create('menu_applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id')->constrained();
+            $table->foreignId('restaurant_id')->constrained('restaurant_applications');
             $table->text('description');
             $table->timestamps();
 

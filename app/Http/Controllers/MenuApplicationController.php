@@ -11,10 +11,15 @@ class MenuApplicationController extends Controller
 {
     public function create(Request $request, $restaurant_id = null)
 {
+
+        // Add this line before creating MenuApplication
+    info('Restaurant ID from session: ' . $restaurant_id);
     // If $restaurant_id is not provided in the URL parameters, check if it's in the query parameters
     if (!$restaurant_id && $request->has('restaurant_id')) {
         $restaurant_id = $request->input('restaurant_id');
     }
+
+    
 
     // Now you have $restaurant_id, and you can use it as needed
 
@@ -30,18 +35,26 @@ class MenuApplicationController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the incoming request data
+        // Update validation rules to match the form field names
         $validatedData = $request->validate([
             'description' => 'required|string|max:255',
-            'dish_name.*' => 'required|string|max:255',
-            'dish_photo.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'dish_description.*' => 'required|string',
-            'dish_price.*' => 'required|numeric',
+            'dishes.*.name' => 'required|string|max:255',
+            'dishes.*.photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dishes.*.description' => 'required|string',
+            'dishes.*.price' => 'required|numeric',
             // Add other validation rules for menu and dish fields here
         ]);
 
+
         // Retrieve the restaurant_id from the session
         $restaurant_id = session('restaurant_id');
+        
+
+        // Check if the restaurant_id exists in the restaurant_applications table
+    if (!RestaurantApplication::where('id', $restaurant_id)->exists()) {
+        return response()->json(['error' => 'Invalid restaurant_id'], 422);
+    }
+
 
         // Create a new menu application
         $menuApplication = MenuApplication::create([
@@ -50,16 +63,16 @@ class MenuApplicationController extends Controller
         ]);
 
         // Create dish applications
-        foreach ($validatedData['dish_name'] as $index => $dishName) {
+        foreach ($validatedData['dishes'] as $index => $dishData) {
             // Handle file upload for the dish photo
-            $dishPhotoPath = $request->file("dish_photo.$index")->store('dish_photos', 'public');
+            $dishPhotoPath = $request->file("dishes.$index.photo")->store('dish_photos', 'public');
 
             DishApplication::create([
                 'menu_id' => $menuApplication->id,
-                'name' => $dishName,
+                'name' => $dishData['name'],
                 'photo' => $dishPhotoPath,
-                'description' => $validatedData['dish_description'][$index],
-                'price' => $validatedData['dish_price'][$index],
+                'description' => $dishData['description'],
+                'price' => $dishData['price'],
             ]);
         }
 
@@ -67,6 +80,6 @@ class MenuApplicationController extends Controller
         session()->forget('restaurant_id');
 
         // Redirect or perform any other actions after successful menu application submission
-        return redirect()->route('home')->with('success', 'Menu application submitted successfully!');
+        return redirect()->route('welcome')->with('success', 'Menu application submitted successfully!');
     }
 }
