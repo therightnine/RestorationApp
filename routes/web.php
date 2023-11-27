@@ -29,11 +29,9 @@ Route::get('/dashboard', function () {
 
 
 
-Route::get('/restaurants', [RestaurantController::class, 'index']);
-Route::get('/restaurants/{id}', [RestaurantController::class, 'show']);
-Route::get('/menus/{id}', 'MenuController@show');
-Route::get('/dishes/{id}', 'DishController@show');
-Route::get('/ratings/{id}', 'RatingController@show');
+Route::get('/restaurants', [RestaurantController::class, 'index']) ->name('restaurants.all');
+Route::get('/restaurants/{id}', [RestaurantController::class, 'show']) ->name('restaurants.single');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -59,5 +59,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Restaurant::class, 'ratings')->withPivot('rating', 'review');
     }
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
 }
 
