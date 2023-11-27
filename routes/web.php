@@ -5,7 +5,7 @@ use App\Http\Controllers\RestaurantApplicationController;
 use App\Http\Controllers\MenuApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 
-
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +29,11 @@ Route::get('/dashboard', function () {
 
 
 
+Route::get('/restaurants', [RestaurantController::class, 'index']);
+Route::get('/restaurants/{id}', [RestaurantController::class, 'show']);
+Route::get('/menus/{id}', 'MenuController@show');
+Route::get('/dishes/{id}', 'DishController@show');
+Route::get('/ratings/{id}', 'RatingController@show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
