@@ -29,4 +29,3 @@ class Cart extends Model
         return $this->belongsTo(Dish::class);
     }
 }
-
