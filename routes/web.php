@@ -57,6 +57,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/deny-restaurant', [AdminDashboardController::class, 'denyRestaurant'])->name('admin.deny-restaurant');
 });
 
+// routes/web.php
+
+Route::get('/cart', 'CartController@viewCart');
+Route::post('/cart/add/{dishId}', 'CartController@addToCart');
+Route::put('/cart/update/{cartId}', 'CartController@updateCart');
+Route::delete('/cart/remove/{cartId}', 'CartController@removeFromCart');
+
 
 require __DIR__.'/auth.php';
 
