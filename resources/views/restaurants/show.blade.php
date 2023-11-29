@@ -115,7 +115,7 @@
                     @foreach($menu->dishes as $dish)
                         <li>
                             {{ $dish->name }} - ${{ $dish->price }}
-                            <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
+    <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
         @csrf
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" value="1" min="1">

@@ -6,8 +6,9 @@ use App\Http\Controllers\MenuApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\RestaurantController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DishController;
+use App\Http\Controllers\CheckoutController; // Add this line
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,12 +57,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/deny-restaurant', [AdminDashboardController::class, 'denyRestaurant'])->name('admin.deny-restaurant');
 });
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/add/{dishId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
 Route::get('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/add-direct/{dishId}', [CartController::class, 'addToCartDirect'])->name('cart.addToCartDirect');
 
 Route::get('/dishes', [DishController::class, 'index'])->name('dishes.index');
 Route::get('/dishes/{id}', [DishController::class, 'show'])->name('dishes.show');
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
 
 require __DIR__.'/auth.php';
