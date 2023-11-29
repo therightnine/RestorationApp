@@ -3,13 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\DishApplication;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DishApplication>
- */
 class DishApplicationFactory extends Factory
 {
-    protected $model = \App\Models\DishApplication::class;
+    protected $model = DishApplication::class;
 
     public function definition()
     {

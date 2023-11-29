@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// DishApplicationSeeder.php
+
 use Illuminate\Database\Seeder;
+use App\Models\DishApplication;
 
 class DishApplicationSeeder extends Seeder
 {
     public function run()
     {
-        \App\Models\DishApplication::factory(50)->create();
+        DishApplication::factory(50)->create();
     }
 }
