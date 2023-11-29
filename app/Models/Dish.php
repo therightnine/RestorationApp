@@ -9,9 +9,16 @@ class Dish extends Model
 {
     use HasFactory;
 
+
+    // ...
+
     protected $fillable = [
-        'name', 'description', 'price', 'menu_id',
+        'name', 'description', 'price', 'menu_id', 'picture', // Add 'pictures' to the fillable array
     ];
+
+    // ...
+
+
 
     public function menu()
     {

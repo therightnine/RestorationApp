@@ -21,9 +21,10 @@ use App\Http\Controllers\DishController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
+    return view('welcome'); })->name('welcome');
+Route::get('/master', function () {
+        return view('layouts/master'); })->name('master');
+ 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -58,7 +59,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::post('/cart/add/{dishId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::put('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::GET('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
 Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::get('/dishes', [DishController::class, 'index'])->name('dishes.index');
