@@ -20,21 +20,21 @@ class CartController extends Controller
 
         // Valider et ajouter l'élément au panier
         // ...
-if ($dish) {
-    // Valider et ajouter l'élément au panier
-    $cartItem = new Cart([
-        'user_id' => auth()->id(),
-        'dish_id' => $dish->id,
-        'quantity' => $request->input('quantity'),
-    ]);
+            if ($dish) {
+                // Valider et ajouter l'élément au panier
+                $cartItem = new Cart([
+                    'user_id' => auth()->id(),
+                    'dish_id' => $dish->id,
+                    'quantity' => $request->input('quantity'),
+                ]);
 
-    $cartItem->save();
+                $cartItem->save();
 
-    return redirect()->route('cart.view')->with('success', 'Item added to cart successfully!');
-} else {
-    // Gérer le cas où le plat n'est pas trouvé
-    return redirect()->route('cart.view')->with('error', 'Dish not found.');
-}
+                return redirect()->route('cart.view')->with('success', 'Item added to cart successfully!');
+            } else {
+                // Gérer le cas où le plat n'est pas trouvé
+                return redirect()->route('cart.view')->with('error', 'Dish not found.');
+            }
     }}
     
     public function updateCart(Request $request, $cartId)

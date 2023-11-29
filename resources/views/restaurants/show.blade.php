@@ -112,20 +112,24 @@
             <li class="menu-item">
                 {{ $menu->name }}
                 <ul>
-                    @foreach($menu->dishes as $dish)
-                        <li>
-                            {{ $dish->name }} - ${{ $dish->price }}
-                            <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
-        @csrf
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" value="1" min="1">
-        <button type="submit">Add to Cart</button>
-    </form>
-                        </li>
-                    @endforeach
+                        @foreach($menu->dishes as $dish)
+                            <li>
+                                {{ $dish->name }} - ${{ $dish->price }}
+                                <!-- Add Item Form -->
+                                <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="dish_id" value="{{ $dish->id }}">
+                                    <label for="quantity">Quantity:</label>
+                                    <input type="number" id="quantity" name="quantity" value="1" min="1">
+                                    <button type="submit">Add to Cart</button>
+                                </form>
+
+                            </li>
+                        @endforeach
                 </ul>
             </li>
         @endforeach
+
     </ul>
 
     <h2>Ratings</h2>

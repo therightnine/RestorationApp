@@ -1,8 +1,6 @@
 <!-- resources/views/cart/view.blade.php -->
 
-@extends('layouts.app')
 
-@section('content')
     <h1>Shopping Cart</h1>
 
     @if(session('success'))
@@ -21,7 +19,7 @@
                     Quantity: {{ $cartItem->quantity }}
 
                     <!-- Update Form -->
-                    <form action="{{ url('/cart/update', $cartItem->id) }}" method="post">
+                    <form action="{{ route('cart.update', ['cartId' => $cartItem->id]) }}" method="post">
                         @csrf
                         @method('put')
                         <label for="quantity">Update Quantity:</label>
@@ -30,22 +28,15 @@
                     </form>
 
                     <!-- Remove Button -->
-                    <form action="{{ url('/cart/remove', $cartItem->id) }}" method="post">
+                    <form action="{{ route('cart.remove', ['cartId' => $cartItem->id]) }}" method="post">
                         @csrf
                         @method('delete')
                         <button type="submit">Remove</button>
                     </form>
-                </li>
+
             @endforeach
         </ul>
     @endif
 
-    <!-- Add Item Form -->
-    <form action="{{ route('cart.add') }}" method="post">
-        @csrf
-        <input type="hidden" name="dish_id" value="{{ $dish->id }}">
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" value="1" min="1">
-        <button type="submit">Add to Cart</button>
-    </form>
-@endsection
+        
+

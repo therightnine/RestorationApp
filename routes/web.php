@@ -56,10 +56,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/deny-restaurant', [AdminDashboardController::class, 'denyRestaurant'])->name('admin.deny-restaurant');
 });
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/add/{dishId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::post('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
-Route::get('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::put('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::get('/dishes', [DishController::class, 'index'])->name('dishes.index');
 Route::get('/dishes/{id}', [DishController::class, 'show'])->name('dishes.show');
