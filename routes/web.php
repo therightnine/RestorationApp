@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantApplicationController;
 use App\Http\Controllers\MenuApplicationController;
 use App\Http\Controllers\AdminDashboardController;
-
+use App\Http\Controllers\RatingController; // Import the RatingController
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +43,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/restaurantApplications/createMenu/{restaurant_id}', 'MenuApplicationController@create')->name('menu.application.create');
     Route::post('/restaurantApplications/menu', [MenuApplicationController::class, 'store'])->name('menu.application.store');
+
+    //rootviewRating
+   
+
+    Route::get('/restaurants/{restaurant}/rate', [RatingController::class, 'create'])->name('restaurants.rate');
+    Route::post('/restaurants/{restaurant}/rate', [RatingController::class, 'store'])->name('restaurants.storeRating');
+    
+
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
