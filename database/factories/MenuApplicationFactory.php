@@ -3,11 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\MenuApplication;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MenuApplication>
+ */
 class MenuApplicationFactory extends Factory
 {
-    protected $model = MenuApplication::class;
+    protected $model = \App\Models\MenuApplication::class;
 
     public function definition()
     {

@@ -19,8 +19,6 @@ class RestaurantFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'rating' => $this->faker->randomFloat(2, 1, 5),
             'location' => $this->faker->address,
-            'shippingfee' => $this->faker->randomFloat(2, 1, 10),
-            'shippingtime' => $this->faker->randomElement(['30 mins', '1 hour', '1.5 hours']),
-         ];
+        ];
     }
 }
