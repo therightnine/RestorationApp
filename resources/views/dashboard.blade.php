@@ -11,15 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div>
-                <div class="mt-4">
-                        <h3 class="text-lg font-semibold mb-2">Admin Actions</h3>
-                        <ul class="list-disc pl-4">
-                            <li><a href="{{ route('admin.applications') }}" class="text-blue-500 hover:underline">View Restaurant Applications</a></li>
-                            <li><a href="{{ route('admin.accepted-restaurants') }}" class="text-green-500 hover:underline">View Accepted Restaurants</a></li>
-                            <li><a href="{{ route('admin.denied-restaurants') }}" class="text-green-500 hover:underline">View Denied Restaurants</a></li>
-
-                        </ul>
-                </div>
+               
             </div>
         </div>
     </div>

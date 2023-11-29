@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/restaurantApplications/createMenu/{restaurant_id}', [MenuApplicationController::class, 'create'])->name('menu.application.create');
     Route::post('/restaurantApplications/menu', [MenuApplicationController::class, 'store'])->name('menu.application.store');
+
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

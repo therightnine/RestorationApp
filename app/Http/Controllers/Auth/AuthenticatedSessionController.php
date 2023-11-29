@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -28,6 +30,14 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+         // Check the role of the authenticated user
+         $user = User::where('email', $request->email)->first();
+
+         if ($user->role === 'admin') {
+             // Redirect admin to the admin dashboard
+             return redirect()->route('admin.dashboard');
+         }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
