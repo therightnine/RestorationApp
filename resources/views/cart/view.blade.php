@@ -3,64 +3,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Shopping Cart</h2>
+    <h1>Shopping Cart</h1>
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+    @if($cartItems->isEmpty())
+        <p>Your cart is empty.</p>
+    @else
+        <ul>
+            @foreach($cartItems as $cartItem)
+                <li>
+                    {{ $cartItem->dish->name }} -
+                    Quantity: {{ $cartItem->quantity }}
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Dish</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($cartItems ?? [] as $cartItem)
-                    <tr>
-                        <td>{{ $cartItem->dish->name }}</td>
-                        <td>${{ $cartItem->dish->price }}</td>
-                        <td>
-                            <form action="{{ route('cart.update', ['cartId' => $cartItem->id]) }}" method="post">
-                                @csrf
-                                <input type="number" name="quantity" value="{{ $cartItem->quantity }}" min="1">
-                                <button type="submit">Update</button>
-                            </form>
-                        </td>
-                        <td>${{ $cartItem->dish->price * $cartItem->quantity }}</td>
-                        <td>
-                            <form action="{{ route('cart.remove', ['cartId' => $cartItem->id]) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5">No items in the cart</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                    <!-- Update Form -->
+                    <form action="{{ url('/cart/update', $cartItem->id) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <label for="quantity">Update Quantity:</label>
+                        <input type="number" name="quantity" value="{{ $cartItem->quantity }}" min="1">
+                        <button type="submit">Update</button>
+                    </form>
 
-        <p>Total: ${{ $total }}</p>
+                    <!-- Remove Button -->
+                    <form action="{{ url('/cart/remove', $cartItem->id) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button type="submit">Remove</button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+    @endif
 
-        <form action="{{ route('checkout') }}" method="get">
-            <button type="submit" class="btn btn-primary">Checkout</button>
-        </form>
-    </div>
+    <!-- Add Item Form -->
+    <form action="{{ route('cart.add') }}" method="post">
+        @csrf
+        <input type="hidden" name="dish_id" value="{{ $dish->id }}">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1">
+        <button type="submit">Add to Cart</button>
+    </form>
 @endsection

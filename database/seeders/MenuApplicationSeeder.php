@@ -2,15 +2,13 @@
 
 namespace Database\Seeders;
 
-// MenuApplicationSeeder.php
-
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\MenuApplication;
 
 class MenuApplicationSeeder extends Seeder
 {
     public function run()
     {
-        MenuApplication::factory(50)->create();
+        \App\Models\MenuApplication::factory(20)->create();
     }
 }
