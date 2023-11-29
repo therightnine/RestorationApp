@@ -1,4 +1,3 @@
-<!-- resources/views/restaurants/show.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,7 @@
         header {
             background-color: #333;
             color: white;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
         }
 
@@ -25,8 +24,8 @@
             margin: 20px auto;
             padding: 20px;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         .restaurant-details {
@@ -34,7 +33,7 @@
             border: 1px solid #ddd;
             padding: 20px;
             margin-bottom: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
         .menu-list {
@@ -45,9 +44,9 @@
         .menu-item {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .rating-list {
@@ -58,9 +57,37 @@
         .rating-item {
             background-color: #f0f8ff;
             border: 1px solid #ddd;
-            margin-bottom: 10px;
-            padding: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Style pour le formulaire d'ajout au panier */
+        form {
+            margin-top: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input {
+            width: 60px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #333;
+            color: white;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
         }
     </style>
 </head>
@@ -86,7 +113,15 @@
                 {{ $menu->name }}
                 <ul>
                     @foreach($menu->dishes as $dish)
-                        <li>{{ $dish->name }} - ${{ $dish->price }}</li>
+                        <li>
+                            {{ $dish->name }} - ${{ $dish->price }}
+                            <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
+        @csrf
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1">
+        <button type="submit">Add to Cart</button>
+    </form>
+                        </li>
                     @endforeach
                 </ul>
             </li>
@@ -97,7 +132,9 @@
     <ul class="rating-list">
         @foreach($restaurant->ratings as $rating)
             <li class="rating-item">
-                Rating: {{ $rating->rating }} - {{ $rating->review }}
+                <strong>User:</strong> {{ $rating->user->name }}<br>
+                Rating: {{ $rating->rating }}<br>
+                <strong>Review:</strong> {{ $rating->review }}
             </li>
         @endforeach
     </ul>

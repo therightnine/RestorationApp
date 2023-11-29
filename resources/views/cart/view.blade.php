@@ -41,10 +41,11 @@
     @endif
 
     <!-- Add Item Form -->
-    <form action="{{ url('/cart/add', $dishId) }}" method="post">
+    <form action="{{ route('cart.add') }}" method="post">
         @csrf
+        <input type="hidden" name="dish_id" value="{{ $dish->id }}">
         <label for="quantity">Quantity:</label>
-        <input type="number" name="quantity" value="1" min="1">
+        <input type="number" id="quantity" name="quantity" value="1" min="1">
         <button type="submit">Add to Cart</button>
     </form>
 @endsection

@@ -4,9 +4,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantApplicationController;
 use App\Http\Controllers\MenuApplicationController;
 use App\Http\Controllers\AdminDashboardController;
+
 use App\Http\Controllers\RatingController; // Import the RatingController
+
+use App\Http\Controllers\CartController;
+
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DishController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +32,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-Route::get('/restaurants', [RestaurantController::class, 'index']) ->name('restaurants.all');
-Route::get('/restaurants/{id}', [RestaurantController::class, 'show']) ->name('restaurants.single');
-
+Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.all');
+Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.single');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/restaurantApplications/create', [RestaurantApplicationController::class, 'create'])->name('restaurant.application.create');
     Route::post('/restaurantApplications', [RestaurantApplicationController::class, 'store'])->name('restaurant.application.store');
 
-    Route::get('/restaurantApplications/createMenu/{restaurant_id}', 'MenuApplicationController@create')->name('menu.application.create');
+    Route::get('/restaurantApplications/createMenu/{restaurant_id}', [MenuApplicationController::class, 'create'])->name('menu.application.create');
     Route::post('/restaurantApplications/menu', [MenuApplicationController::class, 'store'])->name('menu.application.store');
 
     //rootviewRating
@@ -65,14 +67,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/deny-restaurant', [AdminDashboardController::class, 'denyRestaurant'])->name('admin.deny-restaurant');
 });
 
-// routes/web.php
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-Route::get('/cart', 'CartController@viewCart');
-Route::post('/cart/add/{dishId}', 'CartController@addToCart');
-Route::put('/cart/update/{cartId}', 'CartController@updateCart');
-Route::delete('/cart/remove/{cartId}', 'CartController@removeFromCart');
-
+Route::get('/dishes', [DishController::class, 'index'])->name('dishes.index');
+Route::get('/dishes/{id}', [DishController::class, 'show'])->name('dishes.show');
 
 require __DIR__.'/auth.php';
-
-
