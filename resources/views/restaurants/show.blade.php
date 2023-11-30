@@ -108,25 +108,35 @@
 
     <h2>Menus</h2>
     <ul class="menu-list">
-        @foreach($restaurant->menus as $menu)
-            <li class="menu-item">
-                {{ $menu->name }}
-                <ul>
-                    @foreach($menu->dishes as $dish)
-                        <li>
-                            {{ $dish->name }} - ${{ $dish->price }}
-                            <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
-        @csrf
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" value="1" min="1">
-        <button type="submit">Add to Cart</button>
-    </form>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-        @endforeach
-    </ul>
+    @foreach($restaurant->menus as $menu)
+        <li class="menu-item">
+            <h3>{{ $menu->name }}</h3>
+            <ul>
+                @foreach($menu->dishes as $dish)
+                    <li>
+                        <h4>{{ $dish->name }} - ${{ $dish->price }}</h4>
+                        @if($dish->picture)
+                            <img <img src="{{ asset($dish->picture) }}"  alt="{{ $dish->name }}" style="max-width: 300px; max-height: 200px;">
+                        @else
+                            <!-- Provide a default image or text if no picture is available -->
+                            <p>No picture available</p>
+                        @endif
+
+                        <!-- Add Item Form -->
+                        <form action="{{ route('cart.add', ['dishId' => $dish->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="dish_id" value="{{ $dish->id }}">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" value="1" min="1">
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        </li>
+    @endforeach
+</ul>
+
 
     <h2>Ratings</h2>
     <ul class="rating-list">

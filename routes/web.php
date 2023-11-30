@@ -12,6 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DishController;
+use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,24 +26,60 @@ use App\Http\Controllers\DishController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // Fetch cart items or any other data you need
+    $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
+
+    // Pass data to the view
+    return view('welcome', ['cartItems' => $cartItems]);
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+ 
+
 
 Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.all');
 Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.single');
 
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Fetch cart items or any other data you need
+    $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
 
-    Route::get('/restaurantApplications/create', [RestaurantApplicationController::class, 'create'])->name('restaurant.application.create');
-    Route::post('/restaurantApplications', [RestaurantApplicationController::class, 'store'])->name('restaurant.application.store');
+    Route::get('/dashboard', function () use ($cartItems) {
+        return view('dashboard', ['cartItems' => $cartItems]);
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
+    // Profile routes
+    Route::get('/profile', function () use ($cartItems) {
+        return view('profile.edit', ['cartItems' => $cartItems]);
+    })->name('profile.edit');
+
+    Route::patch('/profile', function () use ($cartItems) {
+        return view('profile.update', ['cartItems' => $cartItems]);
+    })->name('profile.update');
+
+    Route::delete('/profile', function () use ($cartItems) {
+        return view('profile.destroy', ['cartItems' => $cartItems]);
+    })->name('profile.destroy');
+
+    // Restaurant Application routes
+    Route::get('/restaurantApplications/create', function () use ($cartItems) {
+        return view('restaurant.application.create', ['cartItems' => $cartItems]);
+    })->name('restaurant.application.create');
+
+    Route::post('/restaurantApplications', function () use ($cartItems) {
+        return view('restaurant.application.store', ['cartItems' => $cartItems]);
+    })->name('restaurant.application.store');
+
+    // Menu Application routes
+    Route::get('/restaurantApplications/createMenu/{restaurant_id}', function ($restaurant_id) use ($cartItems) {
+        return view('menu.application.create', ['restaurant_id' => $restaurant_id, 'cartItems' => $cartItems]);
+    })->name('menu.application.create');
+
+    Route::post('/restaurantApplications/menu', function () use ($cartItems) {
+        return view('menu.application.store', ['cartItems' => $cartItems]);
+    })->name('menu.application.store');
+
+<<<<<<< HEAD
     Route::get('/restaurantApplications/createMenu/{restaurant_id}', [MenuApplicationController::class, 'create'])->name('menu.application.create');
     Route::post('/restaurantApplications/menu', [MenuApplicationController::class, 'store'])->name('menu.application.store');
 
@@ -53,7 +90,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/restaurants/{restaurant}/rate', [RatingController::class, 'store'])->name('restaurants.storeRating');
     
 
+=======
+>>>>>>> 91d53e409d840811d2a2c30b317cf4335abaf7db
 });
+
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
@@ -67,10 +107,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/deny-restaurant', [AdminDashboardController::class, 'denyRestaurant'])->name('admin.deny-restaurant');
 });
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/add/{dishId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::post('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
-Route::get('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::GET('/cart/update/{cartId}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::get('/dishes', [DishController::class, 'index'])->name('dishes.index');
 Route::get('/dishes/{id}', [DishController::class, 'show'])->name('dishes.show');

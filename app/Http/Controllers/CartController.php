@@ -20,21 +20,21 @@ class CartController extends Controller
 
         // Valider et ajouter l'élément au panier
         // ...
-if ($dish) {
-    // Valider et ajouter l'élément au panier
-    $cartItem = new Cart([
-        'user_id' => auth()->id(),
-        'dish_id' => $dish->id,
-        'quantity' => $request->input('quantity'),
-    ]);
+            if ($dish) {
+                // Valider et ajouter l'élément au panier
+                $cartItem = new Cart([
+                    'user_id' => auth()->id(),
+                    'dish_id' => $dish->id,
+                    'quantity' => $request->input('quantity'),
+                ]);
 
-    $cartItem->save();
+                $cartItem->save();
 
-    return redirect()->route('cart.view')->with('success', 'Item added to cart successfully!');
-} else {
-    // Gérer le cas où le plat n'est pas trouvé
-    return redirect()->route('cart.view')->with('error', 'Dish not found.');
-}
+                return redirect()->route('cart.view')->with('success', 'Item added to cart successfully!');
+            } else {
+                // Gérer le cas où le plat n'est pas trouvé
+                return redirect()->route('cart.view')->with('error', 'Dish not found.');
+            }
     }}
     
     public function updateCart(Request $request, $cartId)
@@ -48,8 +48,9 @@ if ($dish) {
         $cartItem->update([
             'quantity' => $request->input('quantity'),
         ]);
+        // Inside your controller method that handles the quantity update
+        return redirect('/cart')->with('success', 'Quantity updated successfully!');
 
-        return redirect('/cart')->with('success', 'Cart updated successfully!');
     }
 
     public function removeFromCart($cartId)
@@ -61,11 +62,23 @@ if ($dish) {
         return redirect('/cart')->with('success', 'Item removed from cart successfully!');
     }
 
+
     public function viewCart()
     {
-        // Display the cart
-        $cartItems = Cart::where('user_id', auth()->id())->get();
-
-        return view('cart.view', compact('cartItems'));
+        // Fetch the cart items and load the related dish and restaurant information
+        $cartItems = Cart::where('user_id', auth()->id())->with(['dish.menu.restaurant'])->get();
+    
+        // Calculate total items and total price
+        $totalItems = $cartItems->sum('quantity');
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->quantity * $item->dish->price;
+        });
+    
+        // Assuming the restaurant is the same for all items in the cart
+        // You can change this if your business logic is different
+        $restaurant = $cartItems->first()->dish->menu->restaurant;
+    
+        return view('cart.view', compact('cartItems', 'totalItems', 'totalPrice', 'restaurant'));
     }
+
 }
