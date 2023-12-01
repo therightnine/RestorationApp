@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\DishController;
+use App\Http\Controllers\RatingController;
+
 use App\Models\Cart;
 
 /*
@@ -34,6 +36,13 @@ Route::get('/', function () {
    Route::middleware('auth')->group(function () {
    // Fetch cart items or any other data you need
        $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
+
+  //rootviewRating
+   
+  Route::get('/restaurants/{restaurant}/rate', [RatingController::class, 'create'])->name('restaurants.rate');
+  Route::post('/restaurants/{restaurant}/rate', [RatingController::class, 'store'])->name('restaurants.storeRating');
+
+
        Route::get('/dashboard', function () use ($cartItems) {
            return view('dashboard', ['cartItems' => $cartItems]);
        })->middleware(['auth', 'verified'])->name('dashboard');
