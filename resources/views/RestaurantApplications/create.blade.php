@@ -17,28 +17,61 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-        }
+       
 
         h2 {
             text-align: center;
             margin-bottom: 30px;
+            color: #e44d26; /* Red */
         }
 
         .mb-3 {
             margin-bottom: 20px;
         }
+
+        label {
+            color: #343a40; /* Dark Gray */
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            border: 1px solid #ced4da; /* Light Gray */
+            border-radius: 4px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838; /* Darker Green */
+        }
+
+        #map {
+            height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
     </style>
 </head>
 
+
 <body>
+@extends('layouts.navbarfooter')
+@section('content')
+
     <div class="container">
         <h2>Create Restaurant Application</h2>
 
@@ -47,22 +80,22 @@
 
             <!-- Add your form fields here -->
             <div class="mb-3">
-                <label for="restaurant_name" class="form-label">Restaurant Id</label>
+                <label for="restaurant_id">Restaurant Id</label>
                 <input type="text" class="form-control" id="restaurant_id" name="restaurant_id" required>
             </div>
 
             <div class="mb-3">
-                <label for="restaurant_name" class="form-label">Restaurant Name</label>
+                <label for="restaurant_name">Restaurant Name</label>
                 <input type="text" class="form-control" id="restaurant_name" name="restaurant_name" required>
             </div>
 
             <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
+                <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
             </div>
 
             <div class="mb-3">
-                <label for="logo" class="form-label">Logo</label>
+                <label for="logo">Logo</label>
                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*" required>
             </div>
 
@@ -74,8 +107,8 @@
 
             <!-- Location Tapping Field -->
             <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <div id="map" style="height: 300px;"></div>
+                <label for="location">Location</label>
+                <div id="map"></div>
                 <div class="input-group">
                     <input type="text" class="form-control" id="location" name="location"
                         placeholder="Type location or click on the map" aria-describedby="location-btn">
@@ -84,7 +117,7 @@
                 </div>
             </div>
 
-           <button type="submit">next</button>
+            <button type="submit">Next</button>
 
         </form>
     </div>
@@ -134,7 +167,9 @@
                 .bindPopup("Your Location").openPopup();
         }
     </script>
+@endsection
 
 </body>
 
 </html>
+

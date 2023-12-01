@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RestaurantApplicationController;
@@ -22,6 +23,37 @@ use App\Models\Cart;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 Route::get('/', function () {
     // Fetch cart items or any other data you need
        $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
@@ -32,39 +64,33 @@ Route::get('/', function () {
    
    Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.all');
    Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.single');
+
+
+Route::middleware(['auth'])->group(function () {
+    // Fetch cart items or any other data you need
+    $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
+
+    // Restaurant Application routes
+    Route::get('/restaurantApplications/create', function () use ($cartItems) {
+        return view('restaurantApplications.create', ['cartItems' => $cartItems]);
+    })->name('restaurant.application.create');
+
+    Route::post('/restaurantApplications', function () use ($cartItems) {
+        return view('restaurantApplications.store', ['cartItems' => $cartItems]);
+    })->name('restaurant.application.store');
+
+    // Menu Application routes
+    Route::get('/restaurantApplications/createMenu/{restaurant_id}', function ($restaurant_id) use ($cartItems) {
+        return view('restaurantApplications.createMenu', ['restaurant_id' => $restaurant_id, 'cartItems' => $cartItems]);
+    })->name('menu.application.create');
+
+    Route::post('/restaurantApplications/menu', function () use ($cartItems) {
+        return view('restaurantApplications.store', ['cartItems' => $cartItems]);
+    })->name('menu.application.store');
+});
+
    
-   Route::middleware('auth')->group(function () {
-   // Fetch cart items or any other data you need
-       $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
-
-  //rootviewRating
-   
-  Route::get('/restaurants/{restaurant}/rate', [RatingController::class, 'create'])->name('restaurants.rate');
-  Route::post('/restaurants/{restaurant}/rate', [RatingController::class, 'store'])->name('restaurants.storeRating');
-
-
-       Route::get('/dashboard', function () use ($cartItems) {
-           return view('dashboard', ['cartItems' => $cartItems]);
-       })->middleware(['auth', 'verified'])->name('dashboard');
-       // Profile routes
-       Route::get('/profile', function () use ($cartItems) {
-           return view('profile.edit', ['cartItems' => $cartItems]);
-       })->name('profile.edit');
-     Route::patch('/profile', function () use ($cartItems) {
-           return view('profile.update', ['cartItems' => $cartItems]);
-       })->name('profile.update');
-   Route::delete('/profile', function () use ($cartItems) {
-           return view('profile.destroy', ['cartItems' => $cartItems]);
-       })->name('profile.destroy');
-       // Restaurant Application routes
-Route::get('/restaurantApplications/create', [RestaurantApplicationController::class,'create'])->name('restaurant.application.create');
-Route::post('/restaurantApplications', [RestaurantApplicationController::class,'store'])->name('restaurant.application.store');
-
-// Menu Application routes
-Route::get('/restaurantApplications/createMenu/{restaurant_id}', [MenuApplicationController::class,'create'])->name('menu.application.create');
-Route::post('/restaurantApplications/menu', [MenuApplicationController::class,'store'])->name('menu.application.store');
-
-   });
+  
    
    Route::middleware(['auth', 'role:admin'])->group(function () {
        Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');

@@ -124,7 +124,7 @@
         <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto w-full flex items-center px-5">
             <ul class="flex md:flex-row flex-col md:items-start justify-start md:gap-[4vw] gap-8 w-full">
                 <li>
-                    <a class="no-underline text-red-500 hover:text-black" href="#">Home</a>
+                    <a class="no-underline text-red-500 hover:text-black" href="/">Home</a>
                 </li>
                 <li>
                     <a class="text-red-500 hover:text-black no-underline" href="#">Features</a>
@@ -210,6 +210,7 @@
 <div>
     @yield('content')
 </div>
+
 
 <!-- Footer -->
 <footer class="footer bg-gradient-to-t from-[#cf6f6f] to-[#ffffff]  text-red-500">
