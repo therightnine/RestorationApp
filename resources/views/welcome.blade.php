@@ -6,7 +6,7 @@
     <title>Dish Dash App</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Optional: Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -50,7 +50,14 @@
 
         #slider {
             margin-top: 20px;
+            margin-bottom: 20px;
         }
+        #slider .carousel-item img {
+    max-height: 900px; 
+    max-width:2000px;
+    object-fit: cover;
+}
+      
 
         .carousel-caption {
             background-color: rgba(0, 0, 0, 0.5);
@@ -79,23 +86,24 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <!-- Add your slider content, e.g., images and text -->
-            <img src="assets/delivery.jpg" class="d-block w-100" alt="Slider Image 1">
-            <div class="carousel-caption d-none d-md-block black">
-                <h2>Welcome to DISHDASH</h2>
-                <p>Discover a variety of restaurants and explore their menus.</p>
-                <a href="#" class="btn btn-danger">Explore Now</a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="assets/delivery2.jpg" class="d-block w-100" alt="Slider Image 2">
+            <img src="assets/del.jpg" class="d-block w-100 " alt="Slider Image 1">
             
+        </div>
+        <div class="carousel-item ">
+            <img src="assets/del2.jpg" class="d-block w-100" alt="Slider Image 2">
         </div> 
         <div class="carousel-item">
-            <img src="assets/delivery3.jpg" class="d-block w-100" alt="Slider Image 2">
-            
+            <img src="assets/food.jpg" class="d-block w-100" alt="Slider Image 3">
         </div> 
         <!-- Add more carousel items as needed -->
     </div>
+    <div class="carousel-caption d-none d-md-block bg-dark text-white">
+                <h2>Welcome to DISHDASH</h2>
+                <p>Discover a variety of restaurants and explore their menus.</p>
+                <a href="#trending-restaurants" class="btn btn-danger">Explore Now</a>
+            </div>
+</div>
+
 
     <!-- Add navigation controls -->
     <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
@@ -120,21 +128,21 @@
             <div class="carousel-item active">
                 <div class="row">
                     <div class="col-md-3">
-                        <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
-                        <h4 class="text-center">Restaurant 1</h4>
+                        <img src="assets/pizza.jpg" class="img-fluid" alt="Restaurant 1">
+                        <h4 class="text-center">Pizza Restaurant </h4>
                     </div>
                     <!-- Add similar columns for Restaurant 2-4 -->
                     <div class="col-md-3">
-                        <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
-                        <h4 class="text-center">Restaurant 2</h4>
+                        <img src="assets/pizza2.jpg" class="img-fluid" alt="Restaurant 1">
+                        <h4 class="text-center">Pizza Restaurant</h4>
                     </div>
                     <div class="col-md-3">
-                        <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
-                        <h4 class="text-center">Restaurant 3</h4>
+                        <img src="assets/pizza3.jpg" class="img-fluid" alt="Restaurant 1">
+                        <h4 class="text-center">Pizza Restaurant</h4>
                     </div>
                     <div class="col-md-3">
-                        <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
-                        <h4 class="text-center">Restaurant 4</h4>
+                        <img src="assets/pizza4.jpg" class="img-fluid" alt="Restaurant 1">
+                        <h4 class="text-center">Pizza Restaurant</h4>
                     </div>
                 </div>
             </div>
@@ -143,20 +151,20 @@
             <div class="carousel-item">
                 <div class="row">
                         <div class="col-md-3">
-                            <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
+                            <img src="assets/resto1.jpg" class="img-fluid" alt="Restaurant 1">
                             <h4 class="text-center">Restaurant 5</h4>
                         </div>
                         <!-- Add similar columns for Restaurant 2-4 -->
                         <div class="col-md-3">
-                            <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
+                            <img src="assets/resto2.jpg" class="img-fluid" alt="Restaurant 1">
                             <h4 class="text-center">Restaurant 6</h4>
                         </div>
                         <div class="col-md-3">
-                            <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
+                            <img src="assets/resto3.PNG" class="img-fluid" alt="Restaurant 1">
                             <h4 class="text-center">Restaurant 7</h4>
                         </div>
                         <div class="col-md-3">
-                            <img src="assets/chicken.jpeg" class="img-fluid" alt="Restaurant 1">
+                            <img src="assets/resto4.PNG" class="img-fluid" alt="Restaurant 1">
                             <h4 class="text-center">Restaurant 8</h4>
                         </div>
                 </div>

@@ -30,8 +30,9 @@ class RatingController extends Controller
 
         $rating->save();
 
-        return redirect()->route('restaurants.show', ['restaurant' => $restaurantId])
-            ->with('success', 'Thank you for your rating!');
+        return redirect()->route('restaurants.single', ['id' => $restaurantId])
+    ->with('success', 'Thank you for your rating!');
+
     }
 }
 

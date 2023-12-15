@@ -133,7 +133,7 @@
                     <a class="text-red-500 hover:text-black no-underline" href="{{route('restaurants.all')}}">Restaurants</a>
                 </li>
                 <li>
-                    <a class="no-underline text-red-500 hover:text-black" href="#">About Us</a>
+                    <a class="no-underline text-red-500 hover:text-black" href="{{ route('aboutUs') }}">About Us</a>
                 </li>
             </ul>
         </div>

@@ -27,6 +27,10 @@ use App\Models\Cart;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/about-us', function () {
+    return view('aboutUs');
+})->name('aboutUs');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -70,13 +74,25 @@ Route::middleware(['auth'])->group(function () {
     // Fetch cart items or any other data you need
     $cartItems = Cart::all(); // Replace this with your actual logic to get cart items
 
+
+
+     // Add a route to display the rating form
+     Route::get('/restaurants/{restaurant}/rate', [RatingController::class, 'create'])
+     ->name('ratings.create');
+
+ // Add a route to handle the submission of the rating form
+ Route::post('/restaurants/{restaurant}/rate', [RatingController::class, 'store'])
+     ->name('ratings.store');
+
+    
+
     // Restaurant Application routes
     Route::get('/restaurantApplications/create', function () use ($cartItems) {
         return view('restaurantApplications.create', ['cartItems' => $cartItems]);
     })->name('restaurant.application.create');
 
     Route::post('/restaurantApplications', function () use ($cartItems) {
-        return view('restaurantApplications.store', ['cartItems' => $cartItems]);
+        return view('restaurantApplications/createMenu', ['cartItems' => $cartItems]);
     })->name('restaurant.application.store');
 
     // Menu Application routes

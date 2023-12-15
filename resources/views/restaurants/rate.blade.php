@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('restaurants.storeRating', ['restaurant' => $restaurant->id]) }}">
+<form method="post" action="{{ route('ratings.store', ['restaurant' => $restaurant->id]) }}">
     @csrf
     <label for="rating">Rate this restaurant (out of 5):</label>
     <input type="number" name="rating" min="1" max="5" required>

@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $restaurant->name }} - Détails du Restaurant</title>
     <style>
+        .navbar-brand img {
+            max-height: 100px;
+        }
+
+        .nav-link {
+            color: red !important;
+            margin: 0 10px;
+        }
+
+        .navbar-brand,
+        .navbar-brand:hover,
+        .navbar-brand:focus {
+            color: black !important;
+        }
+
+        .navbar-brand img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.1);
+        }
+
+        .navbar-brand,
+        .nav-link {
+            font-weight: bold;
+        }
+
+        .navbar-brand,
+        .nav-link:hover {
+            color: red !important;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
@@ -13,10 +46,17 @@
         }
 
         header {
-            background-color: #333;
-            color: white;
+            background-image: url(assets/back5.jpg);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 1900px;
+            color: #185039;
+            font-family: 'Bebas Neue', cursive;
             padding: 20px;
             text-align: center;
+            padding: 20px;
+           
+            
         }
 
         .container {
@@ -29,11 +69,12 @@
         }
 
         .restaurant-details {
-            background-color: #fff;
+            background-image: url(assets/back3.jpg);
             border: 1px solid #ddd;
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 10px;
+            font-family: 'Bebas Neue', cursive;
         }
 
         .menu-list {
@@ -47,11 +88,27 @@
             margin-bottom: 20px;
             padding: 20px;
             border-radius: 10px;
+             font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+            font-family: 'Bebas Neue', cursive;
+      
+        padding-bottom: 40px;
+        color: #185039;
+        -webkit-animation: glow 3s ease-in-out infinite alternate;
+  -moz-animation: glow 3s ease-in-out infinite alternate;
+  animation: glow 5s ease-in-out infinite alternate;
         }
 
         .rating-list {
             list-style: none;
             padding: 0;
+        }
+         a{
+            font-family: 'Bebas Neue', cursive;
+            color: #a54150;
         }
 
         .rating-item {
@@ -60,6 +117,7 @@
             margin-bottom: 20px;
             padding: 20px;
             border-radius: 10px;
+            font-family: 'Bebas Neue', cursive;
         }
 
         /* Style pour le formulaire d'ajout au panier */
@@ -79,7 +137,7 @@
 
         button {
             padding: 5px 10px;
-            background-color: #333;
+            background-color: #a54150;
             color: white;
             border: none;
             border-radius: 5px;
@@ -114,9 +172,9 @@
             <ul>
                 @foreach($menu->dishes as $dish)
                     <li>
-                        <h4>{{ $dish->name }} - ${{ $dish->price }}</h4>
+                        <h4>{{ $dish->name }} - {{ $dish->price }} TND</h4>
                         @if($dish->picture)
-                            <img <img src="{{ asset($dish->picture) }}"  alt="{{ $dish->name }}" style="max-width: 300px; max-height: 200px;">
+                            <img  src="{{ asset($dish->picture) }}"  alt="{{ $dish->name }}" style="max-width: 300px; max-height: 200px;">
                         @else
                             <!-- Provide a default image or text if no picture is available -->
                             <p>No picture available</p>
@@ -138,16 +196,29 @@
 </ul>
 
 
-    <h2>Ratings</h2>
-    <ul class="rating-list">
-        @foreach($restaurant->ratings as $rating)
-            <li class="rating-item">
-                <strong>User:</strong> {{ $rating->user->name }}<br>
-                Rating: {{ $rating->rating }}<br>
-                <strong>Review:</strong> {{ $rating->review }}
-            </li>
-        @endforeach
-    </ul>
+<h2>Ratings</h2>
+<a href="{{ route('ratings.create', ['restaurant' => $restaurant->id]) }}">Write A Review</a>
+<ul class="rating-list">
+    @foreach($restaurant->ratings as $rating)
+        <li class="rating-item">
+            <div style="display: flex; align-items: center;">
+                @if($rating->user->picture)
+                    <img src="{{ asset($rating->user->picture) }}" alt="{{ $rating->user->name }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                @else
+                    <!-- Provide a default image or text if no picture is available -->
+                    <div style="width: 50px; height: 50px; background-color: #ccc; border-radius: 50%; margin-right: 10px;"></div>
+                @endif
+
+                <div>
+                    <strong>User:</strong> {{ $rating->user->name }}<br>
+                    Rating: {{ $rating->rating }}<br>
+                    <strong>Review:</strong> {{ $rating->review }}
+                </div>
+            </div>
+        </li>
+    @endforeach
+</ul>
+
 </div>
 
 </body>

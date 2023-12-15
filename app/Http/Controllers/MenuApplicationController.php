@@ -9,27 +9,25 @@ use App\Models\RestaurantApplication;
 
 class MenuApplicationController extends Controller
 {
-    public function create(Request $request, $restaurant_id = null)
-{
+   
 
-        // Add this line before creating MenuApplication
-    info('Restaurant ID from session: ' . $restaurant_id);
+public function create(Request $request, $restaurant_id = null)
+{
     // If $restaurant_id is not provided in the URL parameters, check if it's in the query parameters
     if (!$restaurant_id && $request->has('restaurant_id')) {
         $restaurant_id = $request->input('restaurant_id');
     }
 
-    
+    // Retrieve the restaurant_id from the session
+    $restaurant_id = $restaurant_id ?? session('restaurant_id');
 
     // Now you have $restaurant_id, and you can use it as needed
-
     $restaurantApplication = $restaurant_id ? RestaurantApplication::findOrFail($restaurant_id) : null;
 
     // Pass $restaurantApplication to the view
     return view('restaurantApplications.createMenu', compact('restaurantApplication'));
 }
 
-    
 
 
 

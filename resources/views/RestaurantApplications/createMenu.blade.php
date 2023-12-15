@@ -37,6 +37,8 @@
 </head>
 
 <body>
+@extends('layouts.navbarfooter')
+@section('content')
 
     <!-- resources/views/MenuApplications/create.blade.php -->
 
@@ -47,7 +49,7 @@
             @csrf
 
             <!-- Hidden field for restaurant_id -->
-            <input type="hidden" name="restaurant_id" value="{{ $restaurantApplication->id }}">
+            <input type="hidden" name="restaurant_id" value="{{ $restaurantApplication->id ?? '' }}">
 
             <!-- Hidden field for menu_id -->
             <input type="hidden" name="menu_id" value="{{ uniqid() }}">
@@ -100,6 +102,7 @@
             dishCounter++;
         });
     </script>
+@endsection
 
 </body>
 

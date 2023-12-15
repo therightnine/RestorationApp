@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Restaurants</title>
+    
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,8 +14,12 @@
         }
 
         header {
-            background-color: #333;
-            color: white;
+            background-image: url(assets/back5.jpg);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 1900px;
+            color: #185039;
+            font-family: 'Bebas Neue', cursive;
             padding: 20px;
             text-align: center;
         }
@@ -71,15 +76,29 @@
             margin-bottom: 10px;
             color: #333;
             text-decoration: none;
+            font-family: 'Bebas Neue', cursive;
+        text-align: center;
+        padding-bottom: 40px;
+        color: #185039;
+        -webkit-animation: glow 3s ease-in-out infinite alternate;
+  -moz-animation: glow 3s ease-in-out infinite alternate;
+  animation: glow 5s ease-in-out infinite alternate;
             display: block; /* Pour rendre le lien cliquable sur toute la largeur */
         }
+        
 
         .restaurant-name:hover {
             color: #e44d26; /* Change color on hover */
         }
+        p{
+            font-family: 'Bebas Neue', cursive;
+            font-weight: bold;
+            color: #df5c6e;
+        }
     </style>
 </head>
 <body>
+
 
 <header>
     <h1>Liste des Restaurants</h1>
